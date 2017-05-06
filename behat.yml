@@ -1,0 +1,15 @@
+## YAML Template.
+
+default:
+    autoload:
+        - %paths.base%/tests/features
+        - %paths.base%/src
+        
+    suites:
+        default:
+            paths: [%paths.base%/tests/gherkin/behat.feature]
+            contexts: [FeatureContext]
+            
+        dummy:
+            paths: [%paths.base%/tests/gherkin/dummy.feature]
+            contexts: [FeatureContext]

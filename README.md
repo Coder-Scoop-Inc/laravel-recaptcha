@@ -19,7 +19,7 @@ Google Recaptcha - Laravel integration
 
 ```
 
- - Rum `composer install` or `composer update`
+ - Run `composer install` or `composer update`
 
  - Add `Coderscoop\LaravelReCaptcha\ReCaptchaServiceProvider::class`, to the providers array in config\app.php.
 

@@ -1,7 +1,7 @@
 Feature: Dummy test package
     In order to interact with the package
     As a tester
-    I want to access the dumy function
+    I want to access the dummy function
 
     Scenario: Dummy dummy
         Given I have an instance of ReCaptcha class

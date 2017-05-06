@@ -1,0 +1,29 @@
+{
+    "name": "coderscoop/laravel-recaptcha",
+    "description": "Google Recaptcha - Laravel integration",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samy Otero Glez",
+            "email": "otero.glez.samy@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "behat/behat": "^3.3",
+        "behat/mink": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Coderscoop\\LaravelReCaptcha\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Coderscoop\\LaravelReCaptcha\\Tests\\": "test/"
+        }
+    }
+}

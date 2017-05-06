@@ -1,5 +1,5 @@
-Feature: Dummy test package example
-    In order to einteract with the package
+Feature: Dummy test package
+    In order to interact with the package
     As a tester
     I want to access the dumy function
 

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * Description of ReCaptchaFacade
  *
- * @author tesa
+ * @author samyoteroglez
  */
 class ReCaptchaFacade extends Facade
 {

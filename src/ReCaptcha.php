@@ -5,7 +5,7 @@ namespace Coderscoop\LaravelReCaptcha;
 /**
  * Description of ReCaptcha
  *
- * @author tesa
+ * @author samyoteroglez
  */
 class ReCaptcha 
 {

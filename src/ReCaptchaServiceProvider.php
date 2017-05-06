@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Description of ReCaptchaServiceProvider
  *
- * @author tesa
+ * @author samyoteroglez
  */
 class ReCaptchaServiceProvider extends ServiceProvider
 {

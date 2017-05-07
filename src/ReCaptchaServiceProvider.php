@@ -59,12 +59,12 @@ class ReCaptchaServiceProvider extends ServiceProvider
     protected function setReCaptchaValidator()
     {
         $reCaptcha = $this->app['reCaptcha'];
-        $this->app
-            ->validator
-            ->extendImplicit('recaptcha', function ($attribute, $value, $parameters) use ($reCaptcha) {
-                $result = $reCaptcha->verify($value);
-
-                return $result;
+        $remoteIp = app('request')->getClientIp();
+        
+        $this->app->validator
+            ->extendImplicit('recaptcha', function ($attribute, $value, $parameters) use ($reCaptcha, $remoteIp) {
+                
+                return $reCaptcha->check($value, $remoteIp)->verify();
         }, 'Please ensure that you are not a robot!');
     }
     
@@ -76,8 +76,7 @@ class ReCaptchaServiceProvider extends ServiceProvider
         $config = __DIR__ . '/Config/recaptcha.php';
         $path = config_path('recaptcha.php');
         
-        $this->publishes([$config => $path], 'config');
-        
+        $this->publishes([$config => $path], 'config');        
         $this->mergeConfigFrom( $config, 'recaptcha');
     }
     

@@ -31,6 +31,13 @@ class ReCaptcha
     protected $globalConfig;
     
     /**
+     * Store the result of the recaptcha check
+     * 
+     * @var json 
+     */
+    protected $verifyRecaptcha;
+    
+    /**
      * Constructor
      */
     public function __construct($globalConfig = null) 
@@ -154,19 +161,23 @@ class ReCaptcha
      */
     public function render()
     {
-        $html = "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey' ";
-        $html .= "></div>";
+        $html = "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey'></div>";
         
         echo $html;
     }
     
-    public function verify($responseField)
+    /**
+     * Check the recaptcha value against google
+     * 
+     * @param string $responseField
+     * @return $this
+     */
+    public function check($responseField, $remoteIp)
     {
         $postData = http_build_query([
                 'secret' => $this->privateKey,
-                //'response' => $_POST['g-recaptcha-response'],
                 'response' => $responseField,
-                'remoteip' => $_SERVER['REMOTE_ADDR']
+                'remoteip' => $remoteIp
             ]);
         
         $options = [
@@ -179,10 +190,19 @@ class ReCaptcha
         
         $context  = stream_context_create($options);
         $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
-        $result = json_decode($response);
+        $this->verifyRecaptcha = json_decode($response);
         
-        //return $result;
-        return (true === $result->success);
+        return $this;
+    }
+    
+    /**
+     * Verify if the validation pass or no
+     * 
+     * @return bool
+     */
+    public function verify()
+    {
+        return (true === $this->verifyRecaptcha->success);
     }
     
     /**

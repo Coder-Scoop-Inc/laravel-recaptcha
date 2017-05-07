@@ -1,7 +1,7 @@
 Feature: Recaptcha class
   In order to intereact with Recaptcha class
   As a tester
-  I want to interact use the Recaptcha api
+  I want to use the Recaptcha api
 
   Scenario: New ReCaptcha Class
     Given I have an instance of ReCaptcha class with the configuration

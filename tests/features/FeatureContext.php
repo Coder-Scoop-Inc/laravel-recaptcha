@@ -22,7 +22,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     /**
      * Will store the result from the dummy function
      * 
-     * @var type 
+     * @var string 
      */
     protected $message;
     

@@ -13,3 +13,7 @@ default:
         dummy:
             paths: [%paths.base%/tests/gherkin/dummy.feature]
             contexts: [FeatureContext]
+            
+        recaptcha:
+            paths: [%paths.base%/tests/gherkin/recaptcha.feature]
+            contexts: [ReCaptchaContext]

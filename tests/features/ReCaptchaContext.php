@@ -39,6 +39,8 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
         $this->reCaptchaConfig = [
             'publicKey' => "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
             'privateKey' => "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
+            'urlApi' => 'https://www.google.com/recaptcha/api.js',
+            'urlVerify' => 'https://www.google.com/recaptcha/api/siteverify'
         ];
     }
     
@@ -128,6 +130,38 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
     public function iShouldBeAbleToGetThePublicKey()
     {
         PHPUnit::assertEquals("6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI", $this->reCaptcha->getPublicKey());
+    }
+    
+    /**
+     * @When I set the url api as :urlApi
+     */
+    public function iSetTheUrlApiAs($urlApi)
+    {
+        $this->reCaptcha->setUrlApi($urlApi);
+    }
+
+    /**
+     * @Then I should be able to get the url api
+     */
+    public function iShouldBeAbleToGetTheUrlApi()
+    {
+        PHPUnit::assertEquals("https://www.google.com/recaptcha/api.js", $this->reCaptcha->getUrlApi());
+    }
+
+    /**
+     * @When I set the url verify as :urlVerify
+     */
+    public function iSetTheUrlVerifyAs($urlVerify)
+    {
+        $this->reCaptcha->setUrlVerify($urlVerify);
+    }
+
+    /**
+     * @Then I should be able to get the url verify
+     */
+    public function iShouldBeAbleToGetTheUrlVerify()
+    {
+        PHPUnit::assertEquals("https://www.google.com/recaptcha/api/siteverify", $this->reCaptcha->getUrlVerify());
     }
 
 }

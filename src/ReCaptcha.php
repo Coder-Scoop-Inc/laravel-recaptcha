@@ -2,6 +2,8 @@
 
 namespace Coderscoop\LaravelReCaptcha;
 
+use App;
+
 /**
  * Description of ReCaptcha
  *
@@ -31,6 +33,20 @@ class ReCaptcha
     protected $globalConfig;
     
     /**
+     * Store the google script to include in order to use google recaptcha api
+     * 
+     * @var string 
+     */
+    protected $urlApi;
+    
+    /**
+     * Store the google url to verfy the google recaptcha
+     * 
+     * @var string 
+     */
+    protected $urlVerify;
+    
+    /**
      * Store the result of the recaptcha check
      * 
      * @var json 
@@ -45,7 +61,9 @@ class ReCaptcha
         if ($globalConfig) {
             $this->setGlobalConfiguration($globalConfig)
                 ->setPrivateKey($this->globalConfig['privateKey'])
-                ->setPublicKey($this->globalConfig['publicKey']);
+                ->setPublicKey($this->globalConfig['publicKey'])
+                ->setUrlApi($this->globalConfig['urlApi'])
+                ->setUrlVerify($this->globalConfig['urlVerify']);
         }
     }
     
@@ -157,11 +175,59 @@ class ReCaptcha
     }
     
     /**
+     * Set the google url to verfy the google recaptcha
+     *  
+     * @param string $urlApi
+     * @return $this
+     */
+    public function setUrlApi($urlApi)
+    {
+        $this->urlApi = $urlApi;
+        
+        return $this;
+    }
+    
+    /**
+     * Get the google url to verfy the google recaptcha
+     * 
+     * @return type
+     */
+    public function getUrlApi()
+    {
+        return $this->urlApi;
+    }
+    
+    /**
+     * Set the google url to verfy the google recaptcha
+     * 
+     * @param string $urlVerify
+     * @return $this
+     */
+    public function setUrlVerify($urlVerify)
+    {
+        $this->urlVerify = $urlVerify;
+        
+        return $this;
+    }
+    
+    /**
+     * Get the google url to verfy the google recaptcha
+     * 
+     * @return type
+     */
+    public function getUrlVerify()
+    {
+        return $this->urlVerify;
+    }
+    
+    /**
      * Render recaptcha
      */
     public function render()
     {
-        $html = "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey'></div>";
+        $url = $this->urlApi . '?hl=' . App::getLocale();
+        $html = "<script src='$url'></script>";
+        $html .= "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey'></div>";
         
         echo $html;
     }

@@ -38,3 +38,8 @@ Google Recaptcha - Laravel integration
  - Add the recaptcha validation rule `'g-recaptcha-response' => 'required|recaptcha'`
 
  - Enjoy it!
+
+
+### ToDo
+
+ - Add support for noscript

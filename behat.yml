@@ -6,14 +6,6 @@ default:
         - %paths.base%/src
         
     suites:
-        default:
-            paths: [%paths.base%/tests/gherkin/behat.feature]
-            contexts: [FeatureContext]
-            
-        dummy:
-            paths: [%paths.base%/tests/gherkin/dummy.feature]
-            contexts: [FeatureContext]
-            
         recaptcha:
             paths: [%paths.base%/tests/gherkin/recaptcha.feature]
             contexts: [ReCaptchaContext]

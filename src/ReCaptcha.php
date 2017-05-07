@@ -205,13 +205,4 @@ class ReCaptcha
         return (true === $this->verifyRecaptcha->success);
     }
     
-    /**
-     * Dummy test. Please remove later.
-     * 
-     * @return string
-     */
-    public function dummy()
-    {
-        return "Hello World in a dummy way!";
-    }
 }

@@ -27,13 +27,11 @@ Google Recaptcha - Laravel integration
 
  - Add 'ReCaptcha' => Coderscoop\LaravelReCaptcha\Facade\ReCaptchaFacade::class, to the aliases array in config\app.php.
 
- - Add `RECAPTCHA_PUBLIC_KEY` and `RECAPTCHA_PRIVATE_KEY` to your .env file with the public and private keys
-
- - Include `use ReCaptcha;` to any class you want.
+ - Add `RECAPTCHA_PUBLIC_KEY` and `RECAPTCHA_PRIVATE_KEY` to your .env file with the public and private keys.
 
  - Add the recaptcha field to your form `{!! ReCaptcha::render() !!}`
  
- - Or you can interact directly with the class api in your controller
+ - Or you can interact directly with the class api in your controller adding `use ReCaptcha;`.
 
  - Add the recaptcha validation rule `'g-recaptcha-response' => 'required|recaptcha'`
 

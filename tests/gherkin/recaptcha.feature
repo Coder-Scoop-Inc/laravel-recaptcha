@@ -1,5 +1,5 @@
 Feature: Recaptcha class
-  In order to intereact with he Recaptcha
+  In order to intereact with Recaptcha class
   As a tester
   I want to interact use the Recaptcha api
 

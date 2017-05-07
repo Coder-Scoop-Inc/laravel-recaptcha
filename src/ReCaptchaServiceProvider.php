@@ -25,7 +25,7 @@ class ReCaptchaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/Views', 'recaptcha');
+        //
     }
 
     /**
@@ -34,28 +34,32 @@ class ReCaptchaServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
+    {        
+        $this->setPackageConfigurationFile();
         $this->bindReCaptcha();
-        $this->setPackageConfigFile();
     }
     
+    /**
+     * Bind the package to Laravel
+     */
     protected function bindReCaptcha()
     {
         $this->app->bind('reCaptcha', function() {
-            return new ReCaptcha(app('config')->get('recaptcha'));
+            return new ReCaptcha(config('recaptcha'));
         });
     }
     
     /**
      * Set package config file
      */
-    protected function setPackageConfigFile()
+    protected function setPackageConfigurationFile()
     {
         $config = __DIR__ . '/Config/recaptcha.php';
         $path = config_path('recaptcha.php');
-        $this->publishes([
-            $config => $path,
-        ]);
+        
+        $this->publishes([$config => $path], 'config');
+        
+        $this->mergeConfigFrom( $config, 'recaptcha');
     }
     
     /**

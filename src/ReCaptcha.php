@@ -40,9 +40,6 @@ class ReCaptcha
                 ->setPrivateKey($this->globalConfig['privateKey'])
                 ->setPublicKey($this->globalConfig['publicKey']);
         }
-        else {
-            $this->setGlobalConfiguration(['privateKey' => '', 'publicKey' => '']);
-        }
     }
     
     /**
@@ -150,6 +147,17 @@ class ReCaptcha
     public function getPrivateKey()
     {
         return $this->privateKey;
+    }
+    
+    /**
+     * Render recaptcha
+     */
+    public function render()
+    {
+        $html = "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey' ";
+        $html .= "></div>";
+        
+        echo $html;
     }
     
     /**

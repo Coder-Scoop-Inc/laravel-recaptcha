@@ -20,5 +20,12 @@ return [
      * Be sure to keep it a secret.
      */
     'privateKey' => env('RECAPTCHA_PRIVATE_KEY'),
+    
+    /**
+     * ReCaptcha field name
+     * 
+     * This is the reacptcha field key in the request
+     */
+    'fieldName' => 'g-recaptcha-response'
 ];
 

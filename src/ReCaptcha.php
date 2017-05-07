@@ -160,6 +160,31 @@ class ReCaptcha
         echo $html;
     }
     
+    public function verify($responseField)
+    {
+        $postData = http_build_query([
+                'secret' => $this->privateKey,
+                //'response' => $_POST['g-recaptcha-response'],
+                'response' => $responseField,
+                'remoteip' => $_SERVER['REMOTE_ADDR']
+            ]);
+        
+        $options = [
+                'http' => [
+                    'method'  => 'POST',
+                    'header'  => 'Content-type: application/x-www-form-urlencoded',
+                    'content' => $postData
+                ]
+            ];
+        
+        $context  = stream_context_create($options);
+        $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+        $result = json_decode($response);
+        
+        //return $result;
+        return (true === $result->success);
+    }
+    
     /**
      * Dummy test. Please remove later.
      * 

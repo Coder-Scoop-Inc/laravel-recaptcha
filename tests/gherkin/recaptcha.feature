@@ -21,4 +21,3 @@ Feature: Recaptcha class
         Given I have an instance of ReCaptcha class without the configuration
         When I set the public key as "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
         Then I should be able to get the public key
-    

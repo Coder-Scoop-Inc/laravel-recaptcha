@@ -25,7 +25,7 @@ class ReCaptchaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->setReCaptchaValidator();
     }
 
     /**
@@ -47,6 +47,25 @@ class ReCaptchaServiceProvider extends ServiceProvider
         $this->app->bind('reCaptcha', function() {
             return new ReCaptcha(config('recaptcha'));
         });
+    }
+    
+    /**
+     * Set the recaptcha validation rule. Now you can validate the recaptcha field in the same way you validate 
+     * other fields using the laravel validation functionalities.
+     * 
+     * 'g-recaptcha-response' => 'required|recaptcha'
+     * 
+     */
+    protected function setReCaptchaValidator()
+    {
+        $reCaptcha = $this->app['reCaptcha'];
+        $this->app
+            ->validator
+            ->extendImplicit('recaptcha', function ($attribute, $value, $parameters) use ($reCaptcha) {
+                $result = $reCaptcha->verify($value);
+
+                return $result;
+        }, 'Please ensure that you are not a robot!');
     }
     
     /**

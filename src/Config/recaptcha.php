@@ -29,6 +29,13 @@ return [
     /**
      * Google url to verfy the google recaptcha
      */
-    'urlVerify' => 'https://www.google.com/recaptcha/api/siteverify'
+    'urlVerify' => 'https://www.google.com/recaptcha/api/siteverify',
+    
+    /**
+     * Use google langage support.
+     * 
+     * If is set to true the application language will be used.
+     */
+    'lang' => true, 
 ];
 

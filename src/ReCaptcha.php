@@ -2,8 +2,6 @@
 
 namespace Coderscoop\LaravelReCaptcha;
 
-use App;
-
 /**
  * Description of ReCaptcha
  *

@@ -2,8 +2,6 @@
 
 namespace Coderscoop\LaravelReCaptcha;
 
-use App;
-
 /**
  * Description of ReCaptcha
  *
@@ -54,6 +52,20 @@ class ReCaptcha
     protected $verifyRecaptcha;
     
     /**
+     * Use language support
+     * 
+     * @var bool 
+     */
+    protected $lang;
+    
+    /**
+     * Store the laravel language
+     * 
+     * @var string 
+     */
+    protected $locale;
+    
+    /**
      * Constructor
      */
     public function __construct($globalConfig = null) 
@@ -63,7 +75,9 @@ class ReCaptcha
                 ->setPrivateKey($this->globalConfig['privateKey'])
                 ->setPublicKey($this->globalConfig['publicKey'])
                 ->setUrlApi($this->globalConfig['urlApi'])
-                ->setUrlVerify($this->globalConfig['urlVerify']);
+                ->setUrlVerify($this->globalConfig['urlVerify'])
+                ->setLang($this->globalConfig['lang'])
+                ->setLocale($this->globalConfig['locale']);
         }
     }
     
@@ -221,15 +235,78 @@ class ReCaptcha
     }
     
     /**
+     * Set the lang. This value tells if add or no the language to the google recaptcha url
+     * 
+     * @param bool $lang
+     * @return $this
+     */
+    public function setLang($lang)
+    {
+        $this->lang = $lang;
+        
+        return $this;
+    }
+    
+    /**
+     * Get the lang. This value tells if add or no the language to the google recaptcha url.
+     * 
+     * @return bool
+     */
+    public function getLang()
+    {
+        return $this->lang;
+    }
+    
+    /**
+     * Set the locale, the used language
+     * 
+     * @param string $locale
+     * @return $this
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+        
+        return $this;
+    }
+    
+    /**
+     * Get locale, the used language
+     * 
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+    
+    /**
      * Render recaptcha
+     * 
+     * @param bool $lang
      */
     public function render()
-    {
-        $url = $this->urlApi . '?hl=' . App::getLocale();
-        $html = "<script src='$url'></script>";
+    {   
+        $html = $this->getScript();
         $html .= "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey'></div>";
         
         echo $html;
+    }
+    
+    /**
+     * Get the google recaptcha script
+     * 
+     * @return string
+     */
+    public function getScript()
+    {
+        $url = $this->urlApi;
+        
+        if (true == $this->lang) {
+            $url = $url . '?hl=' . $this->locale;
+        }
+        
+        return "<script src='$url'></script>"; 
     }
     
     /**

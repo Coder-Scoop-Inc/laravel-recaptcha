@@ -40,7 +40,9 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
             'publicKey' => "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
             'privateKey' => "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
             'urlApi' => 'https://www.google.com/recaptcha/api.js',
-            'urlVerify' => 'https://www.google.com/recaptcha/api/siteverify'
+            'urlVerify' => 'https://www.google.com/recaptcha/api/siteverify',
+            'lang' => false,
+            'locale' => 'en'
         ];
     }
     
@@ -61,12 +63,15 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
     }
     
     /**
-     * @Then The private and public key should be defined
+     * @Then All the defaults should be defined
      */
-    public function thePrivateAndPublicKeyShouldBeDefined()
+    public function allTheDefaultsShouldBeDefined()
     {
         $this->iShouldBeAbleToGetThePrivateKey();
         $this->iShouldBeAbleToGetThePublicKey();
+        $this->iShouldBeAbleToGetTheUrlApi();
+        $this->iShouldBeAbleToGetTheUrlVerify();
+        $this->iSetTheLangAsFalse();
     }
     
     /**
@@ -163,5 +168,55 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
     {
         PHPUnit::assertEquals("https://www.google.com/recaptcha/api/siteverify", $this->reCaptcha->getUrlVerify());
     }
+    
+    /**
+     * @When I set the lang as True
+     */
+    public function iSetTheLangAsTrue()
+    {
+        $this->reCaptcha->setLang(true);
+    }
 
+    /**
+     * @Then I should be able to get the lang as True
+     */
+    public function iShouldBeAbleToGetTheLangAsTrue()
+    {
+        PHPUnit::assertTrue($this->reCaptcha->getLang());
+    }
+    
+    /**
+     * @When I set the lang as false
+     */
+    public function iSetTheLangAsFalse()
+    {
+        $this->reCaptcha->setLang(false);
+    }
+
+    /**
+     * @Then I should be able to get the lang as false
+     */
+    public function iShouldBeAbleToGetTheLangAsFalse()
+    {
+        PHPUnit::assertFalse($this->reCaptcha->getLang());
+    }
+
+    /**
+     * @Then The url api should have the language
+     */
+    public function theUrlApiShouldHaveTheLanguage()
+    {
+        $parent = $this->reCaptcha->getUrlApi() . '?hl=' . $this->reCaptcha->getLocale();
+        $son = $this->reCaptcha->getScript();
+        PHPUnit::assertContains($parent, $son);
+    }
+
+    /**
+     * @When I set the language to :locale
+     */
+    public function iSetTheLanguageTo($locale)
+    {
+        $this->reCaptcha->setLocale($locale);
+    }
+    
 }

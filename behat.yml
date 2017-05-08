@@ -1,0 +1,11 @@
+## YAML Template.
+
+default:
+    autoload:
+        - %paths.base%/tests/features
+        - %paths.base%/src
+        
+    suites:
+        recaptcha:
+            paths: [%paths.base%/tests/gherkin/recaptcha.feature]
+            contexts: [ReCaptchaContext]

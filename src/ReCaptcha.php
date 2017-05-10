@@ -115,7 +115,7 @@ class ReCaptcha
     protected function defineDefaultsAttributes()
     {
         $this->attributes = [
-            'dataTheme' => 'light',
+            'theme' => 'light',
             'includeScript' => true,
             'responsive' => true
         ];
@@ -392,7 +392,7 @@ class ReCaptcha
     {
         $this->fieldHtml .= "<div ";
         $this->fieldHtml .= "class='g-recaptcha}' ";
-        $this->fieldHtml .= "data-theme='{$this->attributes['dataTheme']}' ";
+        $this->fieldHtml .= "data-theme='{$this->attributes['theme']}' ";
         $this->fieldHtml .= "data-sitekey='{$this->publicKey}' ";
         
         if ($this->attributes['responsive']) {

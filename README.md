@@ -35,13 +35,13 @@ Google Recaptcha - Laravel integration
     ```
         {!! 
             ReCaptcha::render([
-                'dataTheme' => 'light',
+                'theme' => 'light',
                 'includeScript' => true,
                 'responsive' => true
             ]) 
         !!}
     ```
-    - `dataTheme`: The google recaptcha theme
+    - `theme`: The google recaptcha theme
     - `includeScript`: If includes or no the google recaptcha script
     - `responsive`: Makes the field responsive or no
 

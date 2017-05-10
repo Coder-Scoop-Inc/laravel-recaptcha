@@ -391,7 +391,7 @@ class ReCaptcha
     protected function createFieldHtml()
     {
         $this->fieldHtml .= "<div ";
-        $this->fieldHtml .= "class='g-recaptcha}' ";
+        $this->fieldHtml .= "class='g-recaptcha' ";
         $this->fieldHtml .= "data-theme='{$this->attributes['theme']}' ";
         $this->fieldHtml .= "data-sitekey='{$this->publicKey}' ";
         

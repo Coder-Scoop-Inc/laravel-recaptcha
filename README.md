@@ -7,7 +7,7 @@ Google Recaptcha - Laravel integration
 
 ```
 
-"require-dev": {
+"require": {
     "coderscoop/laravel-recaptcha": "*"
 },
 "repositories": [
@@ -25,7 +25,7 @@ Google Recaptcha - Laravel integration
 
  - Add `Coderscoop\LaravelReCaptcha\ReCaptchaServiceProvider::class`, to the providers array in config\app.php.
 
- - Add 'ReCaptcha' => Coderscoop\LaravelReCaptcha\Facade\ReCaptchaFacade::class, to the aliases array in config\app.php.
+ - Add `'ReCaptcha' => Coderscoop\LaravelReCaptcha\Facade\ReCaptchaFacade::class`, to the aliases array in config\app.php.
 
  - Add `RECAPTCHA_PUBLIC_KEY` and `RECAPTCHA_PRIVATE_KEY` to your .env file with the public and private keys.
 

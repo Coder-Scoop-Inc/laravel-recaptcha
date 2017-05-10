@@ -343,7 +343,7 @@ class ReCaptcha
      * @param array $attr 
      *      The recaptcha attributes array:
      *      [
-     *          'dataTheme' => 'light',
+     *          'theme' => 'light',
      *          'includeScript' => true,
      *          'responsive' => true
      *      ]

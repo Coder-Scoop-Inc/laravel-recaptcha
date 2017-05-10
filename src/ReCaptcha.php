@@ -364,7 +364,12 @@ class ReCaptcha
      */
     public function getFieldHtml()
     {
-        $this->includeScript()->createFieldHtml();        
+        try {
+            $this->includeScript()->createFieldHtml();
+        }
+        catch (Exception $e) {
+            dump($e);
+        }  
         
         return $this->fieldHtml;
     }

@@ -68,7 +68,6 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
     protected function setReCaptchaAttributesForTest()
     {
         $this->reCpatchaAttributes = [
-            'class' => '',
             'dataTheme' => 'light',
             'includeScript' => true,
             'responsive' => true
@@ -250,12 +249,11 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
     }
     
     /**
-     * @When I set the attributes as :cssClass, :dataTheme, :includeScript and :responsive
+     * @When I set the attributes as :dataTheme, :includeScript and :responsive
      */
-    public function iSetTheAttributesAsAnd($cssClass, $dataTheme, $includeScript, $responsive)
+    public function iSetTheAttributesAsAnd($dataTheme, $includeScript, $responsive)
     {
         $this->reCpatchaAttributes = [
-            'class' => $cssClass,
             'dataTheme' => $dataTheme,
             'incudeScript' => $includeScript,
             'responsive' => $responsive

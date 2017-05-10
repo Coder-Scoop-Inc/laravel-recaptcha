@@ -55,7 +55,7 @@ Feature: Recaptcha class
 
     Scenario: Set and get the recaptcha field attributes
         Given I have an instance of ReCaptcha class with the configuration
-        When I set the attributes as "reClass", "reTheme", "false" and "false"
+        When I set the attributes as "reTheme", "false" and "false"
         Then I should be able to get the same attributes
 
     Scenario: Do not use print the google recaptcha script

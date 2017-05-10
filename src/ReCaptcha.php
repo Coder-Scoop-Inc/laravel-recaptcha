@@ -66,6 +66,13 @@ class ReCaptcha
     protected $locale;
     
     /**
+     * Store the defaults attributes for the recaptcha field
+     * 
+     * @var array 
+     */
+    protected $attributes;
+    
+    /**
      * Constructor
      */
     public function __construct($globalConfig = null) 
@@ -89,6 +96,22 @@ class ReCaptcha
     public static function newInstance()
     {
         return new ReCaptcha;
+    }
+    
+    /**
+     * Define the defaults attributes for the recaptcha field
+     * 
+     * @return $this
+     */
+    protected function defineDefaultsAttributes()
+    {
+        $this->attributes = [
+            'class' => '',
+            'dataTheme' => 'light',
+            'includeScript' => true
+        ];
+        
+        return $this;
     }
     
     /**
@@ -281,12 +304,35 @@ class ReCaptcha
     }
     
     /**
+     * Set the attributes used in the recaptcha field
+     * 
+     * @param array $attributes
+     * @return $this
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+        
+        return $this;
+    }
+    
+    /**
+     * Get the attributes used in the recaptcha field
+     * 
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+    
+    /**
      * Render recaptcha
      * 
      * @param bool $lang
      */
-    public function render()
-    {   
+    public function render($attr = null)
+    {        
         $html = $this->getScript();
         $html .= "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey'></div>";
         

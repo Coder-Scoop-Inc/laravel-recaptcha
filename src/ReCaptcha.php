@@ -73,6 +73,13 @@ class ReCaptcha
     protected $attributes;
     
     /**
+     * Store the field html
+     * 
+     * @var string 
+     */
+    protected $fieldHtml;
+    
+    /**
      * Constructor
      */
     public function __construct($globalConfig = null) 
@@ -86,6 +93,8 @@ class ReCaptcha
                 ->setLang($this->globalConfig['lang'])
                 ->setLocale($this->globalConfig['locale']);
         }
+        
+        $this->defineDefaultsAttributes();
     }
     
     /**
@@ -110,6 +119,8 @@ class ReCaptcha
             'dataTheme' => 'light',
             'includeScript' => true
         ];
+        
+        $this->fieldHtml = '';
         
         return $this;
     }
@@ -327,16 +338,65 @@ class ReCaptcha
     }
     
     /**
-     * Render recaptcha
+     * Render recaptcha field
      * 
-     * @param bool $lang
+     * @param array $attr 
+     *      The recaptcha attributes array:
+     *      [
+     *          'class' => '',
+     *          'dataTheme' => 'light',
+     *          'includeScript' => true
+     *      ]
      */
     public function render($attr = null)
-    {        
-        $html = $this->getScript();
-        $html .= "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey'></div>";
+    {
+        if ($attr) {
+            $this->setAttributes($attr);
+        }
         
-        echo $html;
+        echo $this->getFieldHtml();
+    }
+    
+    /**
+     * Get the recaptcha field html as a string
+     * 
+     * @return string
+     */
+    public function getFieldHtml()
+    {
+        $this->includeScript()->createFieldHtml();        
+        
+        return $this->fieldHtml;
+    }
+    
+    /**
+     * Include or no the google recaptcha script
+     * 
+     * @return $this
+     */
+    protected function includeScript()
+    {
+        if ($this->attributes['includeScript']) {
+            $this->fieldHtml .= $this->getScript();
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * Creates the field html
+     * 
+     * @return $this
+     */
+    protected function createFieldHtml()
+    {
+        $this->fieldHtml .= "<div ";
+        $this->fieldHtml .= "class='g-recaptcha {$this->attributes['class']}' ";
+        $this->fieldHtml .= "data-theme='{$this->attributes['dataTheme']}' ";
+        $this->fieldHtml .= "data-sitekey='{$this->publicKey}'>";
+        $this->fieldHtml .= "</div>";
+        
+        return $this;
     }
     
     /**

@@ -16,16 +16,23 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
     /**
      * Will store a ReCaptcha class instance
      * 
-     * @var type 
+     * @var class 
      */
     protected $reCaptcha;
     
     /**
      * Will store the configuration
      * 
-     * @var type 
+     * @var array 
      */
     protected $reCaptchaConfig;
+    
+    /**
+     * Will store the recaptcha field attributes
+     * 
+     * @var array 
+     */
+    protected $reCpatchaAttributes;
     
     /**
      * Initializes context.
@@ -36,6 +43,15 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
+        $this->setReCaptchaConfigForTest();
+        $this->setReCaptchaAttributesForTest();
+    }
+    
+    /**
+     * Set the recaptcha configuration array for test
+     */
+    protected function setReCaptchaConfigForTest()
+    {
         $this->reCaptchaConfig = [
             'publicKey' => "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
             'privateKey' => "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
@@ -43,6 +59,18 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
             'urlVerify' => 'https://www.google.com/recaptcha/api/siteverify',
             'lang' => false,
             'locale' => 'en'
+        ];
+    }
+    
+    /**
+     * Set the recaptcha field attributes for test
+     */
+    protected function setReCaptchaAttributesForTest()
+    {
+        $this->reCpatchaAttributes = [
+            'class' => '',
+            'dataTheme' => 'light',
+            'includeScript' => true
         ];
     }
     
@@ -72,6 +100,7 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
         $this->iShouldBeAbleToGetTheUrlApi();
         $this->iShouldBeAbleToGetTheUrlVerify();
         $this->iSetTheLangAsFalse();
+        $this->iShouldBeAbleToGetTheSameAttributes();
     }
     
     /**
@@ -217,6 +246,46 @@ class ReCaptchaContext implements Context, SnippetAcceptingContext
     public function iSetTheLanguageTo($locale)
     {
         $this->reCaptcha->setLocale($locale);
+    }
+    
+    /**
+     * @When I set the attributes as :cssClass, :dataTheme and :includeScript
+     */
+    public function iSetTheAttributesAsAnd($cssClass, $dataTheme, $includeScript)
+    {
+        $this->reCpatchaAttributes = [
+            'class' => $cssClass,
+            'dataTheme' => $dataTheme,
+            'incudeScript' => $includeScript
+        ];
+        
+        $this->reCaptcha->setAttributes($this->reCpatchaAttributes);
+    }
+
+    /**
+     * @Then I should be able to get the same attributes
+     */
+    public function iShouldBeAbleToGetTheSameAttributes()
+    {
+        PHPUnit::assertArraySubset($this->reCaptcha->getAttributes(), $this->reCpatchaAttributes);
+    }
+    
+    /**
+     * @When I set the includeScript attribute to false
+     */
+    public function iSetTheIncludescriptAttributeToFalse()
+    {
+        $this->reCpatchaAttributes['includeScript'] = false;
+        $this->reCaptcha->setAttributes($this->reCpatchaAttributes);
+    }
+
+    /**
+     * @Then The google recaptcha script sould not be include
+     */
+    public function theGoogleRecaptchaScriptSouldNotBeInclude()
+    {
+        $html = $this->reCaptcha->getFieldHtml();
+        PHPUnit::assertNotContains("<script src='{$this->reCaptcha->getUrlApi()}'", $html);
     }
     
 }

@@ -117,7 +117,8 @@ class ReCaptcha
         $this->attributes = [
             'class' => '',
             'dataTheme' => 'light',
-            'includeScript' => true
+            'includeScript' => true,
+            'responsive' => true
         ];
         
         $this->fieldHtml = '';
@@ -345,7 +346,8 @@ class ReCaptcha
      *      [
      *          'class' => '',
      *          'dataTheme' => 'light',
-     *          'includeScript' => true
+     *          'includeScript' => true,
+     *          'responsive' => true
      *      ]
      */
     public function render($attr = null)
@@ -364,12 +366,7 @@ class ReCaptcha
      */
     public function getFieldHtml()
     {
-        try {
-            $this->includeScript()->createFieldHtml();
-        }
-        catch (Exception $e) {
-            dump($e);
-        }  
+        $this->includeScript()->createFieldHtml();        
         
         return $this->fieldHtml;
     }
@@ -398,10 +395,30 @@ class ReCaptcha
         $this->fieldHtml .= "<div ";
         $this->fieldHtml .= "class='g-recaptcha {$this->attributes['class']}' ";
         $this->fieldHtml .= "data-theme='{$this->attributes['dataTheme']}' ";
-        $this->fieldHtml .= "data-sitekey='{$this->publicKey}'>";
-        $this->fieldHtml .= "</div>";
+        $this->fieldHtml .= "data-sitekey='{$this->publicKey}' ";
+        
+        if ($this->attributes['responsive']) {
+            $this->fieldHtml .= $this->addResponsiveness();
+        }
+        
+        $this->fieldHtml .= "></div>";
         
         return $this;
+    }
+    
+    /**
+     * Return the styles for responsive as a string
+     * 
+     * @return string
+     */
+    protected function addResponsiveness()
+    {
+        $style = "style='transform:scale(0.77); " .
+                    "-webkit-transform:scale(0.77); " .
+                    "transform-origin:0 0; " .
+                    "-webkit-transform-origin:0 0;'";
+        
+        return $style;
     }
     
     /**

@@ -66,6 +66,20 @@ class ReCaptcha
     protected $locale;
     
     /**
+     * Store the defaults attributes for the recaptcha field
+     * 
+     * @var array 
+     */
+    protected $attributes;
+    
+    /**
+     * Store the field html
+     * 
+     * @var string 
+     */
+    protected $fieldHtml;
+    
+    /**
      * Constructor
      */
     public function __construct($globalConfig = null) 
@@ -79,6 +93,8 @@ class ReCaptcha
                 ->setLang($this->globalConfig['lang'])
                 ->setLocale($this->globalConfig['locale']);
         }
+        
+        $this->defineDefaultsAttributes();
     }
     
     /**
@@ -89,6 +105,24 @@ class ReCaptcha
     public static function newInstance()
     {
         return new ReCaptcha;
+    }
+    
+    /**
+     * Define the defaults attributes for the recaptcha field
+     * 
+     * @return $this
+     */
+    protected function defineDefaultsAttributes()
+    {
+        $this->attributes = [
+            'theme' => 'light',
+            'includeScript' => true,
+            'responsive' => true
+        ];
+        
+        $this->fieldHtml = '';
+        
+        return $this;
     }
     
     /**
@@ -281,16 +315,108 @@ class ReCaptcha
     }
     
     /**
-     * Render recaptcha
+     * Set the attributes used in the recaptcha field
      * 
-     * @param bool $lang
+     * @param array $attributes
+     * @return $this
      */
-    public function render()
-    {   
-        $html = $this->getScript();
-        $html .= "<div class='g-recaptcha' data-theme='light' data-sitekey='$this->publicKey'></div>";
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
         
-        echo $html;
+        return $this;
+    }
+    
+    /**
+     * Get the attributes used in the recaptcha field
+     * 
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+    
+    /**
+     * Render recaptcha field
+     * 
+     * @param array $attr 
+     *      The recaptcha attributes array:
+     *      [
+     *          'theme' => 'light',
+     *          'includeScript' => true,
+     *          'responsive' => true
+     *      ]
+     */
+    public function render($attr = null)
+    {
+        if ($attr) {
+            $this->setAttributes($attr);
+        }
+        
+        echo $this->getFieldHtml();
+    }
+    
+    /**
+     * Get the recaptcha field html as a string
+     * 
+     * @return string
+     */
+    public function getFieldHtml()
+    {
+        $this->includeScript()->createFieldHtml();        
+        
+        return $this->fieldHtml;
+    }
+    
+    /**
+     * Include or no the google recaptcha script
+     * 
+     * @return $this
+     */
+    protected function includeScript()
+    {
+        if ($this->attributes['includeScript']) {
+            $this->fieldHtml .= $this->getScript();
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * Creates the field html
+     * 
+     * @return $this
+     */
+    protected function createFieldHtml()
+    {
+        $this->fieldHtml .= "<div ";
+        $this->fieldHtml .= "class='g-recaptcha' ";
+        $this->fieldHtml .= "data-theme='{$this->attributes['theme']}' ";
+        $this->fieldHtml .= "data-sitekey='{$this->publicKey}' ";
+        
+        if ($this->attributes['responsive']) {
+            $this->fieldHtml .= $this->addResponsiveness();
+        }
+        
+        $this->fieldHtml .= "></div>";
+        
+        return $this;
+    }
+    
+    /**
+     * Return the styles for responsive as a string
+     * 
+     * @return string
+     */
+    protected function addResponsiveness()
+    {
+        $style = "style='transform:scale(0.77); " .
+                    "-webkit-transform:scale(0.77); " .
+                    "transform-origin:0 0; " .
+                    "-webkit-transform-origin:0 0;'";
+        
+        return $style;
     }
     
     /**

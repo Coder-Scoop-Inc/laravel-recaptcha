@@ -52,3 +52,13 @@ Feature: Recaptcha class
         When I set the language to "fr"
         And I set the lang as true
         Then The url api should have the language
+
+    Scenario: Set and get the recaptcha field attributes
+        Given I have an instance of ReCaptcha class with the configuration
+        When I set the attributes as "reTheme", "false" and "false"
+        Then I should be able to get the same attributes
+
+    Scenario: Do not use print the google recaptcha script
+        Given I have an instance of ReCaptcha class with the configuration
+        When I set the includeScript attribute to false
+        Then The google recaptcha script sould not be include

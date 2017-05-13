@@ -102,9 +102,9 @@ class ReCaptcha
      * 
      * @return \Coderscoop\LaravelReCaptcha\ReCaptcha
      */
-    public static function newInstance()
+    public static function newInstance($globalConfig = null)
     {
-        return new ReCaptcha;
+        return new ReCaptcha($globalConfig);
     }
     
     /**

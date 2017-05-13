@@ -48,7 +48,7 @@ class ReCaptchaServiceProvider extends ServiceProvider
         $config['locale'] = $this->app->getLocale();
         
         $this->app->bind('reCaptcha', function() use ($config) {
-            return new ReCaptcha($config);
+            return ReCaptcha::newInstance($config);
         });
     }
     

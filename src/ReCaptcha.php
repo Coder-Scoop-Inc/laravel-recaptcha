@@ -85,13 +85,7 @@ class ReCaptcha
     public function __construct($globalConfig = null) 
     {
         if ($globalConfig) {
-            $this->setGlobalConfiguration($globalConfig)
-                ->setPrivateKey($this->globalConfig['privateKey'])
-                ->setPublicKey($this->globalConfig['publicKey'])
-                ->setUrlApi($this->globalConfig['urlApi'])
-                ->setUrlVerify($this->globalConfig['urlVerify'])
-                ->setLang($this->globalConfig['lang'])
-                ->setLocale($this->globalConfig['locale']);
+            $this->config($globalConfig);
         }
         
         $this->defineDefaultsAttributes();
@@ -100,11 +94,31 @@ class ReCaptcha
     /**
      * New instance
      * 
+     * @param array $globalConfig
      * @return \Coderscoop\LaravelReCaptcha\ReCaptcha
      */
-    public static function newInstance()
+    public static function newInstance($globalConfig = null)
     {
-        return new ReCaptcha;
+        return new ReCaptcha($globalConfig);
+    }
+    
+    /**
+     * Set all the configuration attributes.
+     * 
+     * @param array $globalConfig
+     * @return $this
+     */
+    protected function config($globalConfig)
+    {
+        $this->globalConfig = $globalConfig;
+        $this->privateKey = $this->globalConfig['privateKey'];
+        $this->publicKey = $this->globalConfig['publicKey'];
+        $this->urlApi = $this->globalConfig['urlApi'];
+        $this->urlVerify = $this->globalConfig['urlVerify'];
+        $this->lang = $this->globalConfig['lang'];
+        $this->locale = $this->globalConfig['locale'];
+        
+        return $this;
     }
     
     /**
@@ -458,7 +472,7 @@ class ReCaptcha
             ];
         
         $context  = stream_context_create($options);
-        $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+        $response = file_get_contents($this->urlVerify, false, $context);
         $this->verifyRecaptcha = json_decode($response);
         
         return $this;
@@ -472,6 +486,5 @@ class ReCaptcha
     public function verify()
     {
         return (true === $this->verifyRecaptcha->success);
-    }
-    
+    }    
 }

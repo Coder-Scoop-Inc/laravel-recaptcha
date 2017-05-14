@@ -1,6 +1,7 @@
 {
     "name": "coderscoop/laravel-recaptcha",
     "description": "Google Recaptcha - Laravel integration",
+    "keywords": ["laravel", "captcha", "recaptcha", "security", "anti-robot", "robot detection", "google", "coderscoop"],
     "type": "library",
     "license": "MIT",
     "authors": [

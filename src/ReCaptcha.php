@@ -472,7 +472,7 @@ class ReCaptcha
             ];
         
         $context  = stream_context_create($options);
-        $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+        $response = file_get_contents($this->urlVerify, false, $context);
         $this->verifyRecaptcha = json_decode($response);
         
         return $this;

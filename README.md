@@ -3,7 +3,21 @@ Google Recaptcha - Laravel integration
 
 ### Install
 
- - Add the package to your composer.jon file
+ - You can install directly using composer `composer require coderscoop/laravel-recaptcha`
+
+ - Or include the package to your composer.json
+
+```
+
+"require": {
+    "coderscoop/laravel-recaptcha": "*"
+}
+
+```
+
+ - Or download it directly from the github repository
+
+ - And run `composer install` or `composer update`
 
 ```
 
@@ -19,7 +33,7 @@ Google Recaptcha - Laravel integration
 
 ```
 
- - Run `composer install` or `composer update`
+ - And run `composer install` or `composer update`
 
 ### Usage
 
@@ -51,7 +65,14 @@ Google Recaptcha - Laravel integration
 
  - Enjoy it!
 
+### Extra
+ 
+ - You could publish the recaptcha config file using `php artisan vendor:publish --tag=config` and you 
+will have access to the recaptcha config file in `app/config/recaptcha.php`
+
 
 ### ToDo
 
  - Add support for noscript
+ - Add language file
+ - Add support to integration with LaravelCollective

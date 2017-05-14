@@ -16,7 +16,7 @@ class ReCaptchaServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer = false;
     
     /**
      * Bootstrap the application services.
@@ -48,7 +48,7 @@ class ReCaptchaServiceProvider extends ServiceProvider
         $config['locale'] = $this->app->getLocale();
         
         $this->app->bind('reCaptcha', function() use ($config) {
-            return ReCaptcha::newInstance($config);
+            return new ReCaptcha($config);
         });
     }
     

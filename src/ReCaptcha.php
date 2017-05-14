@@ -85,13 +85,7 @@ class ReCaptcha
     public function __construct($globalConfig = null) 
     {
         if ($globalConfig) {
-            $this->setGlobalConfiguration($globalConfig)
-                ->setPrivateKey($this->globalConfig['privateKey'])
-                ->setPublicKey($this->globalConfig['publicKey'])
-                ->setUrlApi($this->globalConfig['urlApi'])
-                ->setUrlVerify($this->globalConfig['urlVerify'])
-                ->setLang($this->globalConfig['lang'])
-                ->setLocale($this->globalConfig['locale']);
+            $this->config($globalConfig);
         }
         
         $this->defineDefaultsAttributes();
@@ -100,6 +94,7 @@ class ReCaptcha
     /**
      * New instance
      * 
+     * @param array $globalConfig
      * @return \Coderscoop\LaravelReCaptcha\ReCaptcha
      */
     public static function newInstance($globalConfig = null)
@@ -108,11 +103,30 @@ class ReCaptcha
     }
     
     /**
+     * Set all the configuration attributes.
+     * 
+     * @param array $globalConfig
+     * @return $this
+     */
+    protected function config($globalConfig)
+    {
+        $this->globalConfig = $globalConfig;
+        $this->privateKey = $this->globalConfig['privateKey'];
+        $this->publicKey = $this->globalConfig['publicKey'];
+        $this->urlApi = $this->globalConfig['urlApi'];
+        $this->urlVerify = $this->globalConfig['urlVerify'];
+        $this->lang = $this->globalConfig['lang'];
+        $this->locale = $this->globalConfig['locale'];
+        
+        return $this;
+    }
+    
+    /**
      * Define the defaults attributes for the recaptcha field
      * 
      * @return $this
      */
-    protected function defineDefaultsAttributes()
+    public function defineDefaultsAttributes()
     {
         $this->attributes = [
             'theme' => 'light',
@@ -472,6 +486,5 @@ class ReCaptcha
     public function verify()
     {
         return (true === $this->verifyRecaptcha->success);
-    }
-    
+    }    
 }

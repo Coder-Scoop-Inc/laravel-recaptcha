@@ -126,7 +126,7 @@ class ReCaptcha
      * 
      * @return $this
      */
-    public function defineDefaultsAttributes()
+    protected function defineDefaultsAttributes()
     {
         $this->attributes = [
             'theme' => 'light',
